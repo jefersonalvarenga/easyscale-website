@@ -1,3 +1,6 @@
+[env]
+PATH = "/app/node_modules/.bin:$PATH"
+
 [phases.setup]
 nixPkgs = ["nodejs_20"]
 
@@ -5,7 +8,7 @@ nixPkgs = ["nodejs_20"]
 cmd = "npm install"
 
 [phases.build]
-cmd = "export PATH=/app/node_modules/.bin:$PATH && npm run build"
+cmd = "npm run build"
 
 [start]
 cmd = "npm start"
