@@ -2,7 +2,10 @@
 PATH = "/app/node_modules/.bin:$PATH"
 
 [phases.setup]
-nixPkgs = ["nodejs_20_with_npm"]
+nixPkgs = [
+  "nodejs_20",
+  "nodePackages.npm"
+]
 
 [phases.install]
 cmd = "npm install"
