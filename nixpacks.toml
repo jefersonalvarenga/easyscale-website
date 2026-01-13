@@ -5,10 +5,10 @@ PATH = "/app/node_modules/.bin:$PATH"
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmd = "npm install"
+cmd = "corepack enable && npx npm install"
 
 [phases.build]
-cmd = "npm run build"
+cmd = "corepack enable && npx npm run build"
 
 [start]
 cmd = "npm start"
