@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora ROI - EasyScale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #FFFFFF;
+            --background-secondary: #F6F9FC;
+            --text-primary: #0A2540;
+            --text-secondary: #64748B;
+            --primary: #635BFF;
+            --primary-hover: #5046E5;
+            --accent: #00AFE1;
+            --success: #10B981;
+            --border: #E5E7EB;
+            --danger: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-weight: 700;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #635BFF 0%, #00AFE1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .back-btn {
+            padding: 10px 24px;
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.05) 0%, rgba(0, 175, 225, 0.05) 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero-section p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            padding: 60px 0 100px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .calculator-card:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .card-icon.input {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.1) 0%, rgba(99, 91, 255, 0.2) 100%);
+        }
+
+        .card-icon.results {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.2) 100%);
+        }
+
+        .card-header h2 {
+            font-size: 24px;
+            color: var(--text-primary);
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .input-suffix {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 16px;
+            padding-left: 40px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--background-secondary);
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .calculate-btn:hover::before {
+            left: 100%;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 91, 255, 0.3);
+        }
+
+        /* Results */
+        .results-container {
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .comparison-card {
+            background: var(--background-secondary);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comparison-card.current {
+            border: 2px solid var(--danger);
+        }
+
+        .comparison-card.projected {
+            border: 2px solid var(--success);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.1) 100%);
+        }
+
+        .comparison-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .comparison-card.current .comparison-label {
+            color: var(--danger);
+        }
+
+        .comparison-card.projected .comparison-label {
+            color: var(--success);
+        }
+
+        .comparison-card h3 {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .comparison-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .metric-row {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .metric-change {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-left: 12px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.2) 100%);
+            color: var(--success);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-top: 32px;
+            border: 1px solid var(--border);
+        }
+
+        .chart-container h3 {
+            font-size: 18px;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Impact Banner */
+        .impact-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        .impact-banner h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .impact-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        .impact-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Features Table */
+        .features-section {
+            background: var(--background-secondary);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .features-header h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .features-header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .features-table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .features-table thead {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.08) 0%, rgba(0, 175, 225, 0.08) 100%);
+        }
+
+        .features-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .features-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .features-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .features-table tbody tr:hover {
+            background: var(--background-secondary);
+        }
+
+        .feature-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .feature-impact {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .feature-gain-percent {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--success);
+        }
+
+        .feature-gain-value {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--success);
+        }
+
+        .feature-benefit {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .table-footer {
+            margin-top: 16px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.05) 0%, rgba(0, 175, 225, 0.05) 100%);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .results-table thead {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.08) 0%, rgba(0, 175, 225, 0.08) 100%);
+        }
+
+        .results-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .results-table th:nth-child(2),
+        .results-table th:nth-child(3) {
+            text-align: center;
+        }
+
+        .results-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .results-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tbody tr:hover {
+            background: var(--background-secondary);
+        }
+
+        .results-indicator {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .results-value {
+            text-align: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .results-value.current {
+            color: var(--danger);
+        }
+
+        .results-value.projected {
+            color: var(--success);
+        }
+
+        .results-revenue-row {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.03) 0%, rgba(0, 175, 225, 0.03) 100%);
+        }
+
+        .results-revenue-row td {
+            font-size: 16px;
+            padding: 24px 20px;
+        }
+
+        .results-revenue-row .results-value {
+            font-size: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-section h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .hero-section p {
+                font-size: 18px;
+            }
+
+            .calculator-card {
+                padding: 24px;
+            }
+
+            .impact-value {
+                font-size: 36px;
+            }
+
+            .features-section {
+                padding: 24px;
+            }
+
+            .features-table {
+                font-size: 12px;
+            }
+
+            .features-table th,
+            .features-table td {
+                padding: 12px 10px;
+            }
+
+            .features-table th {
+                font-size: 11px;
+            }
+
+            .feature-impact {
+                font-size: 16px;
+            }
+
+            .feature-gain-percent,
+            .feature-gain-value {
+                font-size: 14px;
+            }
+
+            .results-table {
+                font-size: 12px;
+            }
+
+            .results-table th,
+            .results-table td {
+                padding: 12px 10px;
+            }
+
+            .results-table th {
+                font-size: 11px;
+            }
+
+            .results-value {
+                font-size: 14px;
+            }
+
+            .results-revenue-row .results-value {
+                font-size: 18px;
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">EasyScale</a>
+                <a href="index.html" class="back-btn">← Voltar ao site</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Calculadora de <span class="gradient-text">ROI</span></h1>
+            <p>Descubra o potencial real da sua clínica com a metodologia EasyScale 3x</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-grid">
+                <!-- Input Card -->
+                <div class="calculator-card">
+                    <div class="card-header">
+                        <div class="card-icon input">📊</div>
+                        <h2>Dados Atuais da Clínica</h2>
+                    </div>
+
+                    <form id="calculatorForm">
+                        <div class="form-group">
+                            <label for="adsInvestment">
+                                Investimento Mensal em Anúncios
+                                <span class="tooltip" data-tooltip="Quanto você gasta mensalmente em Google Ads, Facebook Ads, etc.">ℹ️</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="number" id="adsInvestment" min="0" step="100" placeholder="10000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpl">
+                                CPL - Custo por Lead
+                                <span class="tooltip" data-tooltip="Quanto você paga em média por cada lead gerado">ℹ️</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="number" id="cpl" min="0" step="1" placeholder="50" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conversionRate">
+                                Taxa de Conversão Atual
+                                <span class="tooltip" data-tooltip="% de leads que se convertem em agendamentos">ℹ️</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="conversionRate" min="0" max="100" step="0.1" placeholder="20" required>
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="noShowRate">
+                                Taxa de No-Show Atual
+                                <span class="tooltip" data-tooltip="% de pacientes que não comparecem às consultas agendadas">ℹ️</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="noShowRate" min="0" max="100" step="0.1" placeholder="30" required>
+                                <span class="input-suffix">%</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="averageTicket">
+                                Ticket Médio por Paciente
+                                <span class="tooltip" data-tooltip="Valor médio que cada paciente gasta na primeira consulta">ℹ️</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="number" id="averageTicket" min="0" step="10" placeholder="500" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="calculate-btn">Calcular Resultado 🚀</button>
+                    </form>
+                </div>
+
+                <!-- Results Card -->
+                <div class="calculator-card">
+                    <div class="card-header">
+                        <div class="card-icon results">✨</div>
+                        <h2>Projeção com EasyScale</h2>
+                    </div>
+
+                    <div class="results-container" id="resultsContainer">
+                        <!-- Results Table -->
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Indicador</th>
+                                    <th>Manual</th>
+                                    <th>EasyScale</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="results-indicator">Leads Mensais</td>
+                                    <td class="results-value current" id="currentLeads">0</td>
+                                    <td class="results-value projected" id="projectedLeads">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="results-indicator">Agendamentos</td>
+                                    <td class="results-value current" id="currentAppointments">0</td>
+                                    <td class="results-value projected" id="projectedAppointments">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="results-indicator">Pacientes Atendidos</td>
+                                    <td class="results-value current" id="currentPatients">0</td>
+                                    <td class="results-value projected" id="projectedPatients">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="results-indicator">ROI Mensal</td>
+                                    <td class="results-value current" id="currentROI">0%</td>
+                                    <td class="results-value projected" id="projectedROI">0%</td>
+                                </tr>
+                                <tr class="results-revenue-row">
+                                    <td class="results-indicator">Faturamento Mensal</td>
+                                    <td class="results-value current" id="currentRevenue">R$ 0</td>
+                                    <td class="results-value projected" id="projectedRevenue">R$ 0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Impact Banner -->
+                        <div class="impact-banner">
+                            <h3>Ganho Adicional Mensal</h3>
+                            <div class="impact-value" id="additionalRevenue">R$ 0</div>
+                            <div class="impact-subtitle">Com a metodologia EasyScale 3x</div>
+                        </div>
+
+                        <!-- Features Breakdown Table -->
+                        <div class="features-section">
+                            <div class="features-header">
+                                <h3>Impacto de cada funcionalidade EasyScale®</h3>
+                                <p>Otimização no Faturamento</p>
+                            </div>
+
+                            <table class="features-table">
+                                <thead>
+                                    <tr>
+                                        <th>Funcionalidade</th>
+                                        <th>Impacto</th>
+                                        <th>R$ do Ganho</th>
+                                        <th>Benefício Principal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="feature-name">Atendimento imediato 24/7</td>
+                                        <td class="feature-impact">45%</td>
+                                        <td class="feature-gain-value" id="feature1Value">-</td>
+                                        <td class="feature-benefit">Maior driver de conversão</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="feature-name">Confirmação e lembrete</td>
+                                        <td class="feature-impact">20%</td>
+                                        <td class="feature-gain-value" id="feature2Value">-</td>
+                                        <td class="feature-benefit">Reduz no-show 30% → 12%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="feature-name">Reaquecimento 24h/48h/72h</td>
+                                        <td class="feature-impact">15%</td>
+                                        <td class="feature-gain-value" id="feature3Value">-</td>
+                                        <td class="feature-benefit">Recupera 15-20% dos frios</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="feature-name">Pagamento antecipado</td>
+                                        <td class="feature-impact">10%</td>
+                                        <td class="feature-gain-value" id="feature4Value">-</td>
+                                        <td class="feature-benefit">Reduz no-show 12% → 6%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="feature-name">Upsell complementares</td>
+                                        <td class="feature-impact">10%</td>
+                                        <td class="feature-gain-value" id="feature5Value">-</td>
+                                        <td class="feature-benefit">Aumenta ticket ~10%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="table-footer">
+                                <p><strong>*</strong> Estimativa com base em resultados de mercado para o setor de clínicas de estética no Brasil em 2025, com uso de inteligência artificial no atendimento via Whatsapp.</p>
+                                <p style="margin-top: 8px;">O valor de conversão varia conforme a qualidade das campanhas de marketing digital (tráfego pago) nas redes sociais de de pesquisa.</p>
+                                <p style="margin-top: 8px;">A clínica pode ativar essas funcionalidades gradualmente, conforme maturidade da operação.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder when no results -->
+                    <div id="placeholderMessage" style="text-align: center; padding: 60px 20px; color: var(--text-secondary);">
+                        <div style="font-size: 64px; margin-bottom: 16px;">📈</div>
+                        <h3 style="font-size: 18px; margin-bottom: 8px;">Preencha os dados</h3>
+                        <p style="font-size: 14px;">Insira as informações da sua clínica para ver a projeção de resultados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function formatNumber(value) {
+            return new Intl.NumberFormat('pt-BR').format(Math.round(value));
+        }
+
+        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get input values
+            const adsInvestment = parseFloat(document.getElementById('adsInvestment').value);
+            const cpl = parseFloat(document.getElementById('cpl').value);
+            const conversionRate = parseFloat(document.getElementById('conversionRate').value) / 100;
+            const noShowRate = parseFloat(document.getElementById('noShowRate').value) / 100;
+            const averageTicket = parseFloat(document.getElementById('averageTicket').value);
+
+            // Calculate current situation
+            const currentLeads = adsInvestment / cpl;
+            const currentAppointments = currentLeads * conversionRate;
+            const currentPatients = currentAppointments * (1 - noShowRate);
+            const currentRevenue = currentPatients * averageTicket;
+            const currentROI = ((currentRevenue - adsInvestment) / adsInvestment) * 100;
+
+            // Calculate projected situation with EasyScale (3x improvement)
+            // EasyScale promises 3x better results through:
+            // - Better lead quality (higher conversion rate)
+            // - Reduced no-show rate
+            // - Optimized process
+            const projectedConversionRate = Math.min(conversionRate * 3.3, 0.95); // 3.3x increase, max 95% conversion
+            const projectedNoShowRate = Math.max(noShowRate * 0.20, 0.05); // 80% reduction (20% remains), min 5%
+
+            const projectedLeads = currentLeads; // Same leads
+            const projectedAppointments = projectedLeads * projectedConversionRate;
+            const projectedPatients = projectedAppointments * (1 - projectedNoShowRate);
+            const projectedAverageTicket = averageTicket * 1.10; // 10% upsell increase
+            const projectedRevenue = projectedPatients * projectedAverageTicket;
+            const projectedROI = ((projectedRevenue - adsInvestment) / adsInvestment) * 100;
+
+            // Calculate increases
+            const additionalRevenue = projectedRevenue - currentRevenue;
+            const leadsIncrease = projectedLeads - currentLeads;
+            const appointmentsIncrease = projectedAppointments - currentAppointments;
+            const patientsIncrease = projectedPatients - currentPatients;
+            const roiIncrease = projectedROI - currentROI;
+
+            // Update UI - Results Table
+            // Leads
+            document.getElementById('currentLeads').textContent = formatNumber(currentLeads);
+            document.getElementById('projectedLeads').textContent = formatNumber(projectedLeads);
+
+            // Agendamentos
+            document.getElementById('currentAppointments').textContent = formatNumber(currentAppointments);
+            document.getElementById('projectedAppointments').textContent = formatNumber(projectedAppointments);
+
+            // Pacientes
+            document.getElementById('currentPatients').textContent = formatNumber(currentPatients);
+            document.getElementById('projectedPatients').textContent = formatNumber(projectedPatients);
+
+            // ROI
+            document.getElementById('currentROI').textContent = currentROI.toFixed(0) + '%';
+            document.getElementById('projectedROI').textContent = projectedROI.toFixed(0) + '%';
+
+            // Faturamento
+            document.getElementById('currentRevenue').textContent = formatCurrency(currentRevenue);
+            document.getElementById('projectedRevenue').textContent = formatCurrency(projectedRevenue);
+
+            // Ganho adicional
+            document.getElementById('additionalRevenue').textContent = formatCurrency(additionalRevenue);
+
+            // Calculate feature breakdown based on impact percentages
+            // Features: 45%, 20%, 15%, 10%, 10% (Total: 100%)
+            const featureImpacts = [0.45, 0.20, 0.15, 0.10, 0.10];
+
+            featureImpacts.forEach((impact, index) => {
+                const featureGain = additionalRevenue * impact;
+                document.getElementById(`feature${index + 1}Value`).textContent = formatCurrency(featureGain);
+            });
+
+            // Show results
+            document.getElementById('placeholderMessage').style.display = 'none';
+            document.getElementById('resultsContainer').classList.add('active');
+
+            // Scroll to results on mobile
+            if (window.innerWidth < 1024) {
+                document.getElementById('resultsContainer').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
