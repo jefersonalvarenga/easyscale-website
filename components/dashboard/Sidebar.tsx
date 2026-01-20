@@ -4,7 +4,20 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const menuItems = [
+interface MenuItem {
+  name: string;
+  href: string;
+  icon: string;
+  badge?: string;
+  admin?: boolean;
+}
+
+interface MenuSection {
+  section: string;
+  items: MenuItem[];
+}
+
+const menuItems: MenuSection[] = [
   {
     section: 'Principal',
     items: [
