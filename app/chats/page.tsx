@@ -103,11 +103,17 @@ export default function Chats() {
   const [searchQuery, setSearchQuery] = useState('');
   const [messageInput, setMessageInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const previousMessageCountRef = useRef<number>(0);
 
-  // Auto scroll para última mensagem
+  // Auto scroll para última mensagem (apenas dentro do container)
   const scrollToBottom = (smooth = true) => {
-    messagesEndRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: smooth ? 'smooth' : 'auto'
+      });
+    }
   };
 
   useEffect(() => {
@@ -367,7 +373,7 @@ export default function Chats() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-8 space-y-4">
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-8 space-y-4">
               {currentMessages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'client' ? 'justify-start' : 'justify-end'}`}>
                   <div className={`max-w-lg ${msg.sender === 'client' ? '' : 'order-2'}`}>
