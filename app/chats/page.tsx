@@ -103,14 +103,26 @@ export default function Chats() {
   const [searchQuery, setSearchQuery] = useState('');
   const [messageInput, setMessageInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const previousMessageCountRef = useRef<number>(0);
 
   // Auto scroll para última mensagem
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (smooth = true) => {
+    messagesEndRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Só faz scroll se houver mensagens novas (não ao trocar de conversa)
+    const currentMessages = messages.filter(m => m.conversation_id === selectedChat);
+
+    if (currentMessages.length > previousMessageCountRef.current) {
+      // Nova mensagem chegou - scroll suave
+      scrollToBottom(true);
+    } else if (currentMessages.length > 0 && previousMessageCountRef.current === 0) {
+      // Primeira carga ou troca de conversa - scroll instantâneo
+      setTimeout(() => scrollToBottom(false), 100);
+    }
+
+    previousMessageCountRef.current = currentMessages.length;
   }, [messages, selectedChat]);
 
   // Conversação selecionada
