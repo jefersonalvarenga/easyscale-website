@@ -235,7 +235,7 @@ export default function Chats() {
           <div className="px-6 py-3 border-b border-gray-200 flex gap-2 overflow-x-auto">
             <button
               onClick={() => setFilter('all')}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                 filter === 'all'
                   ? 'bg-[#635BFF] text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -245,7 +245,7 @@ export default function Chats() {
             </button>
             <button
               onClick={() => setFilter('bot')}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                 filter === 'bot'
                   ? 'bg-[#635BFF] text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -255,7 +255,7 @@ export default function Chats() {
             </button>
             <button
               onClick={() => setFilter('agent')}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                 filter === 'agent'
                   ? 'bg-[#635BFF] text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -265,7 +265,7 @@ export default function Chats() {
             </button>
             <button
               onClick={() => setFilter('resolved')}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                 filter === 'resolved'
                   ? 'bg-[#635BFF] text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
