@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      spacing: {
+        32: "3rem", // redefine o py-32 para 96 px, reduzindo o espaço vertical
+      },
       colors: {
         background: "#FFFFFF",
         backgroundSecondary: "#F6F9FC",

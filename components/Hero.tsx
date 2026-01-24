@@ -22,15 +22,15 @@ export default function Hero() {
           </div>
 
           {/* Headline */}
-          <h1 className="font-display text-6xl md:text-7xl font-bold leading-tight stagger-2 animate-slide-up">
-            Cresça sua clínica{" "}
-            <span className="gradient-text">sem complicação</span>
+          <h1 className="font-display text-5xl md:text-6xl font-bold leading-tight stagger-2 animate-slide-up">
+            A única IA especialista em estéticas {" "}
+            <span className="gradient-text"> que converte 4x mais.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-textSecondary leading-relaxed stagger-3 animate-slide-up">
-            Automação inteligente que converte leads em agendamentos 24/7.
-            Mais pacientes, menos trabalho manual, crescimento garantido.
+            IA que vende e agenda por você, 24 horas por dia
+            e libera até 40% do trabalho repetitivo da sua recepção.
           </p>
 
           {/* Stats Row */}
@@ -98,7 +98,7 @@ export default function Hero() {
                 {/* User Message */}
                 <div className="flex justify-end">
                   <div className="bg-primary/10 text-textPrimary rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%]">
-                    <p className="text-sm">Olá! Gostaria de agendar um botox</p>
+                    <p className="text-sm">Olá, gostaria de mais informações sobre o Fotona</p>
                     <p className="text-xs text-textSecondary mt-1">14:32</p>
                   </div>
                 </div>
@@ -106,7 +106,7 @@ export default function Hero() {
                 {/* Bot Response */}
                 <div className="flex justify-start">
                   <div className="bg-white border border-border rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] shadow-sm">
-                    <p className="text-sm">Olá! 👋 Será um prazer te ajudar! Temos horários disponíveis esta semana. Qual dia prefere?</p>
+                    <p className="text-sm">Olá Mariana! 👋 Será um prazer te atender! Gostaria de ver fotos dos resultados?</p>
                     <p className="text-xs text-textSecondary mt-1">14:32</p>
                   </div>
                 </div>
