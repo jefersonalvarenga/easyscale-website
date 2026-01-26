@@ -16,13 +16,13 @@ export default function Pricing() {
       ]
     },
     {
-      name: "Scale",
+      name: "Performance",
       price: "2497",
       description: "Para clínicas em crescimento",
       popular: true,
       features: [
         "Até 2.000 conversas/mês",
-        "Tudo do Starter, mais:",
+        "Tudo do Growth, mais:",
         "Qualificação de leads",
         "Follow-up automático",
         "Analytics avançado",
@@ -31,13 +31,13 @@ export default function Pricing() {
       ]
     },
     {
-      name: "Performance",
+      name: "Scale",
       price: "4.997",
       description: "Para operações grandes",
       popular: false,
       features: [
         "Conversas ilimitadas",
-        "Tudo do Growth, mais:",
+        "Tudo do Performance, mais:",
         "Multi-unidades",
         "API personalizada",
         "Treinamento dedicado",
