@@ -1,362 +1,310 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
-import { useState } from 'react';
-
-// Tipos
-export type FunnelStage = 'COLD' | 'TOFU' | 'MOFU' | 'BOFU';
-
-export interface Lead {
-  id: number;
-  name: string;
-  phone: string;
-  lastMessage: string;
-  time: string;
-  stage: FunnelStage;
-  origin: string;
-  interest: string;
-  messageCount: number;
-  unreadCount: number;
-  firstInteraction: string;
-}
-
-interface KanbanColumnProps {
-  title: string;
-  description: string;
-  leads: Lead[];
-  color: string;
-  icon: string;
-  onLeadClick: (lead: Lead) => void;
-}
-
-// Componente da Coluna do Kanban
-function KanbanColumn({ title, description, leads, color, icon, onLeadClick }: KanbanColumnProps) {
-  return (
-    <div className="flex-1 min-w-[300px] bg-gray-50 rounded-xl p-4">
-      {/* Header da Coluna */}
-      <div className={`bg-gradient-to-r ${color} rounded-lg p-4 mb-4 text-white`}>
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl">{icon}</span>
-          <h3 className="font-bold text-lg">{title}</h3>
-        </div>
-        <p className="text-sm opacity-90">{description}</p>
-        <div className="mt-3 flex items-center justify-between">
-          <span className="text-xs font-medium opacity-90">Total</span>
-          <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-bold">
-            {leads.length}
-          </span>
-        </div>
-      </div>
-
-      {/* Lista de Leads */}
-      <div className="space-y-3 max-h-[calc(100vh-300px)] overflow-y-auto pr-2">
-        {leads.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
-            <p className="text-3xl mb-2">📭</p>
-            <p className="text-sm">Nenhum lead nesta etapa</p>
-          </div>
-        ) : (
-          leads.map((lead) => (
-            <LeadCard key={lead.id} lead={lead} onClick={() => onLeadClick(lead)} />
-          ))
-        )}
-      </div>
-    </div>
-  );
-}
-
-// Componente do Card de Lead
-function LeadCard({ lead, onClick }: { lead: Lead; onClick: () => void }) {
-  return (
-    <div
-      onClick={onClick}
-      className="bg-white rounded-lg p-4 border border-gray-200 hover:shadow-md hover:border-[#635BFF]/30 transition-all cursor-pointer"
-    >
-      {/* Avatar e Nome */}
-      <div className="flex items-start gap-3 mb-3">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#635BFF] to-[#00AFE1] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-          {lead.name.split(' ').map(n => n[0]).join('')}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-1">
-            <p className="font-semibold text-gray-900 truncate">{lead.name}</p>
-            {lead.unreadCount > 0 && (
-              <span className="px-2 py-0.5 text-xs font-semibold bg-red-500 text-white rounded-full flex-shrink-0">
-                {lead.unreadCount}
-              </span>
-            )}
-          </div>
-          <p className="text-xs text-gray-500">{lead.phone}</p>
-        </div>
-      </div>
-
-      {/* Última Mensagem */}
-      <div className="mb-3">
-        <p className="text-sm text-gray-600 line-clamp-2">{lead.lastMessage}</p>
-      </div>
-
-      {/* Informações */}
-      <div className="flex items-center gap-2 flex-wrap text-xs">
-        <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded font-medium">
-          {lead.origin}
-        </span>
-        <span className="px-2 py-1 bg-purple-50 text-purple-700 rounded font-medium">
-          {lead.interest}
-        </span>
-      </div>
-
-      {/* Rodapé */}
-      <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-        <span className="text-xs text-gray-500">💬 {lead.messageCount} msgs</span>
-        <span className="text-xs text-gray-500">{lead.time}</span>
-      </div>
-    </div>
-  );
-}
+import KanbanBoard from '@/components/looker/KanbanBoard';
+import LeadDetailsModal from '@/components/looker/LeadDetailsModal';
+import { KanbanColumn, Lead, LeadStage } from '@/types/lead';
 
 export default function Looker() {
-  // Estado dos leads (mock data - virá do Supabase)
-  const [leads] = useState<Lead[]>([
-    {
-      id: 1,
-      name: 'Maria Silva',
-      phone: '(11) 98765-4321',
-      lastMessage: 'Gostaria de agendar uma avaliação para harmonização facial',
-      time: '14:32',
-      stage: 'BOFU',
-      origin: 'Instagram Ads',
-      interest: 'Harmonização Facial',
-      messageCount: 8,
-      unreadCount: 2,
-      firstInteraction: 'Hoje, 14:28'
-    },
-    {
-      id: 2,
-      name: 'João Santos',
-      phone: '(11) 98765-1234',
-      lastMessage: 'Qual o valor do procedimento de botox?',
-      time: '14:15',
-      stage: 'MOFU',
-      origin: 'Google Ads',
-      interest: 'Botox',
-      messageCount: 5,
-      unreadCount: 0,
-      firstInteraction: 'Ontem, 10:15'
-    },
-    {
-      id: 3,
-      name: 'Ana Costa',
-      phone: '(11) 98765-5678',
-      lastMessage: 'Olá, vi o anúncio no Instagram',
-      time: '13:45',
-      stage: 'TOFU',
-      origin: 'Facebook Ads',
-      interest: 'Preenchimento Labial',
-      messageCount: 2,
-      unreadCount: 1,
-      firstInteraction: 'Hoje, 13:40'
-    },
-    {
-      id: 4,
-      name: 'Carlos Ferreira',
-      phone: '(11) 98765-9012',
-      lastMessage: 'Arquivo importado do WhatsApp',
-      time: '10:30',
-      stage: 'COLD',
-      origin: 'Upload ZIP',
-      interest: 'Limpeza de Pele',
-      messageCount: 15,
-      unreadCount: 0,
-      firstInteraction: '15/12/2025'
-    },
-    {
-      id: 5,
-      name: 'Paula Mendes',
-      phone: '(11) 98765-3456',
-      lastMessage: 'Vocês fazem preenchimento? Tenho interesse',
-      time: '12:20',
-      stage: 'MOFU',
-      origin: 'Instagram Ads',
-      interest: 'Preenchimento Facial',
-      messageCount: 4,
-      unreadCount: 1,
-      firstInteraction: 'Hoje, 12:10'
-    },
-  ]);
-
+  const [columns, setColumns] = useState<KanbanColumn[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
-  // Separar leads por estágio
-  const leadsByStage = {
-    COLD: leads.filter(l => l.stage === 'COLD'),
-    TOFU: leads.filter(l => l.stage === 'TOFU'),
-    MOFU: leads.filter(l => l.stage === 'MOFU'),
-    BOFU: leads.filter(l => l.stage === 'BOFU'),
+  // Mock data - substituir por dados reais do Supabase
+  useEffect(() => {
+    const mockLeads: Lead[] = [
+      {
+        id: '1',
+        name: 'Maria Silva',
+        phone: '+55 11 98765-4321',
+        stage: 'TOFU',
+        lastMessage: 'Oi, gostaria de saber mais sobre os procedimentos',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 5),
+        unreadCount: 2,
+        source: 'whatsapp',
+        psychologicalProfile: 'Curiosa/Pesquisadora',
+        summary: 'Primeira interação. Demonstra interesse em conhecer os procedimentos oferecidos pela clínica.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        name: 'João Santos',
+        phone: '+55 11 97654-3210',
+        stage: 'MOFU',
+        lastMessage: 'Qual o valor do preenchimento labial?',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 30),
+        unreadCount: 1,
+        source: 'whatsapp',
+        psychologicalProfile: 'Pragmático/Direto',
+        summary: 'Interessado em preenchimento labial. Já perguntou sobre valores e disponibilidade.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '3',
+        name: 'Ana Costa',
+        phone: '+55 11 96543-2109',
+        stage: 'BOFU',
+        lastMessage: 'Posso agendar para amanhã às 14h?',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 10),
+        unreadCount: 3,
+        source: 'whatsapp',
+        psychologicalProfile: 'Decidida/Objetiva',
+        summary: 'Pronta para agendar botox. Demonstra urgência e decisão de compra.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '4',
+        name: 'Carlos Oliveira',
+        phone: '+55 11 95432-1098',
+        stage: 'FRIOS',
+        lastMessage: 'Obrigado pelas informações',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 60 * 48),
+        unreadCount: 0,
+        source: 'upload',
+        psychologicalProfile: 'Analítico/Cauteloso',
+        summary: 'Lead antigo. Última interação há 2 dias. Pode precisar de reengajamento.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '5',
+        name: 'Paula Mendes',
+        phone: '+55 11 94321-0987',
+        stage: 'TOFU',
+        lastMessage: 'Vocês atendem aos sábados?',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 15),
+        unreadCount: 1,
+        source: 'whatsapp',
+        psychologicalProfile: 'Organizada/Planejadora',
+        summary: 'Perguntou sobre horários de atendimento. Parece estar avaliando disponibilidade.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '6',
+        name: 'Roberto Lima',
+        phone: '+55 11 93210-9876',
+        stage: 'MOFU',
+        lastMessage: 'Aceita cartão de crédito?',
+        lastMessageTime: new Date(Date.now() - 1000 * 60 * 45),
+        unreadCount: 2,
+        source: 'whatsapp',
+        psychologicalProfile: 'Prático/Financeiro',
+        summary: 'Interessado em formas de pagamento. Pode estar próximo de decisão de compra.',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    // Função para ordenar leads por tempo de espera (maior tempo primeiro)
+    const sortLeadsByWaitTime = (leads: Lead[]) => {
+      return [...leads].sort((a, b) => {
+        return new Date(a.lastMessageTime).getTime() - new Date(b.lastMessageTime).getTime();
+      });
+    };
+
+    const initialColumns: KanbanColumn[] = [
+      {
+        id: 'FRIOS',
+        title: 'Frios',
+        color: 'gray',
+        description: 'Leads antigos',
+        leads: sortLeadsByWaitTime(mockLeads.filter(l => l.stage === 'FRIOS')),
+      },
+      {
+        id: 'TOFU',
+        title: 'Topo de Funil',
+        color: 'blue',
+        description: 'Primeiras interações',
+        leads: sortLeadsByWaitTime(mockLeads.filter(l => l.stage === 'TOFU')),
+      },
+      {
+        id: 'MOFU',
+        title: 'Meio de Funil',
+        color: 'yellow',
+        description: 'Demonstram interesse',
+        leads: sortLeadsByWaitTime(mockLeads.filter(l => l.stage === 'MOFU')),
+      },
+      {
+        id: 'BOFU',
+        title: 'Fundo de Funil',
+        color: 'green',
+        description: 'Prontos para agendar',
+        leads: sortLeadsByWaitTime(mockLeads.filter(l => l.stage === 'BOFU')),
+      },
+    ];
+
+    setColumns(initialColumns);
+    setLoading(false);
+    console.log('Looker - Columns loaded:', initialColumns);
+  }, []);
+
+  const handleLeadMove = async (leadId: string, fromStage: LeadStage, toStage: LeadStage) => {
+    console.log(`Lead ${leadId} movido de ${fromStage} para ${toStage}`);
+
+    // Atualizar estado local
+    setColumns(prevColumns => {
+      return prevColumns.map(col => {
+        // Remover lead da coluna de origem
+        if (col.id === fromStage) {
+          return {
+            ...col,
+            leads: col.leads.filter(l => l.id !== leadId)
+          };
+        }
+
+        // Adicionar lead na coluna de destino
+        if (col.id === toStage) {
+          const leadToMove = prevColumns
+            .find(c => c.id === fromStage)
+            ?.leads.find(l => l.id === leadId);
+
+          if (leadToMove) {
+            return {
+              ...col,
+              leads: [...col.leads, { ...leadToMove, stage: toStage }]
+            };
+          }
+        }
+
+        return col;
+      });
+    });
+
+    // TODO: Implementar atualização no Supabase
+    // await updateLeadStage(leadId, toStage);
   };
 
-  // Handler para clique no lead
-  const handleLeadClick = (lead: Lead) => {
-    setSelectedLead(lead);
+  const handleUploadWhatsApp = () => {
+    // TODO: Implementar upload de arquivo .zip do WhatsApp
+    console.log('Upload de conversas do WhatsApp');
   };
+
+  const totalLeads = columns.reduce((sum, col) => sum + col.leads.length, 0);
+  const unreadMessages = columns.reduce(
+    (sum, col) => sum + col.leads.reduce((s, l) => s + l.unreadCount, 0),
+    0
+  );
 
   return (
     <DashboardLayout>
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-8 py-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold text-gray-900">Looker®</h1>
-              <span className="px-3 py-1 bg-gradient-to-r from-[#635BFF] to-[#00AFE1] text-white text-xs font-bold rounded-full">
-                BETA
-              </span>
-            </div>
-            <p className="text-gray-500 mt-1">Classificação em tempo real dos seus leads</p>
+            <h1 className="text-3xl font-bold text-gray-900">Looker</h1>
+            <p className="text-gray-500 mt-1">
+              Visualização em tempo real da classificação de leads
+            </p>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="text-right">
-              <p className="text-sm text-gray-500">Atualização</p>
-              <p className="text-sm font-medium text-gray-900">Tempo real ⚡</p>
+          <button
+            onClick={handleUploadWhatsApp}
+            className="px-4 py-2 bg-gradient-to-r from-[#635BFF] to-[#00AFE1] text-white rounded-lg font-semibold hover:shadow-lg transition-all flex items-center gap-2"
+          >
+            <span>📁</span>
+            Upload WhatsApp
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-500">Total de Leads</p>
+                <p className="text-2xl font-bold text-gray-900">{totalLeads}</p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xl">
+                👥
+              </div>
             </div>
-            <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
-              📤 Upload ZIP
-            </button>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-blue-600">Topo de Funil</p>
+                <p className="text-2xl font-bold text-blue-700">
+                  {columns.find(c => c.id === 'TOFU')?.leads.length || 0}
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center text-xl">
+                🔵
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-yellow-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-yellow-600">Meio de Funil</p>
+                <p className="text-2xl font-bold text-yellow-700">
+                  {columns.find(c => c.id === 'MOFU')?.leads.length || 0}
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-yellow-200 flex items-center justify-center text-xl">
+                🟡
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-green-600">Fundo de Funil</p>
+                <p className="text-2xl font-bold text-green-700">
+                  {columns.find(c => c.id === 'BOFU')?.leads.length || 0}
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center text-xl">
+                🟢
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
 
-      {/* Estatísticas */}
-      <div className="px-8 py-6 bg-gray-50 border-b border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-xs text-gray-500 mb-1">Total de Leads</p>
-            <p className="text-2xl font-bold text-gray-900">{leads.length}</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-xs text-gray-500 mb-1">Leads Frios ❄️</p>
-            <p className="text-2xl font-bold text-gray-900">{leadsByStage.COLD.length}</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-xs text-gray-500 mb-1">Topo de Funil 🌱</p>
-            <p className="text-2xl font-bold text-gray-900">{leadsByStage.TOFU.length}</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-xs text-gray-500 mb-1">Meio de Funil 🔥</p>
-            <p className="text-2xl font-bold text-gray-900">{leadsByStage.MOFU.length}</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-xs text-gray-500 mb-1">Fundo de Funil 💎</p>
-            <p className="text-2xl font-bold text-gray-900">{leadsByStage.BOFU.length}</p>
-          </div>
-        </div>
+      {/* Search Bar */}
+      <div className="px-8 py-4 bg-gray-50 border-b border-gray-200">
+        <input
+          type="text"
+          placeholder="Buscar por nome, telefone ou informações do lead..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-[#635BFF] focus:ring-2 focus:ring-[#635BFF]/20 text-sm"
+        />
       </div>
 
       {/* Kanban Board */}
       <div className="p-8">
-        <div className="flex gap-6 overflow-x-auto pb-4">
-          <KanbanColumn
-            title="Leads Frios"
-            description="Leads antigos (pré-Looker®)"
-            leads={leadsByStage.COLD}
-            color="from-gray-500 to-gray-600"
-            icon="❄️"
-            onLeadClick={handleLeadClick}
-          />
-          <KanbanColumn
-            title="Topo de Funil"
-            description="Primeiras mensagens"
-            leads={leadsByStage.TOFU}
-            color="from-green-500 to-green-600"
-            icon="🌱"
-            onLeadClick={handleLeadClick}
-          />
-          <KanbanColumn
-            title="Meio de Funil"
-            description="Demonstra interesse"
-            leads={leadsByStage.MOFU}
-            color="from-orange-500 to-orange-600"
-            icon="🔥"
-            onLeadClick={handleLeadClick}
-          />
-          <KanbanColumn
-            title="Fundo de Funil"
-            description="Pronto para agendar"
-            leads={leadsByStage.BOFU}
-            color="from-[#635BFF] to-[#00AFE1]"
-            icon="💎"
-            onLeadClick={handleLeadClick}
-          />
-        </div>
-      </div>
-
-      {/* Modal de Detalhes do Lead (opcional) */}
-      {selectedLead && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={() => setSelectedLead(null)}
-        >
-          <div
-            className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-900">Detalhes do Lead</h3>
-              <button
-                onClick={() => setSelectedLead(null)}
-                className="text-gray-400 hover:text-gray-600 text-2xl"
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#635BFF] to-[#00AFE1] flex items-center justify-center text-white font-bold text-xl">
-                  {selectedLead.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div>
-                  <p className="font-bold text-gray-900 text-lg">{selectedLead.name}</p>
-                  <p className="text-sm text-gray-500">{selectedLead.phone}</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Estágio</p>
-                  <p className="font-medium text-gray-900">{selectedLead.stage}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Origem</p>
-                  <p className="font-medium text-gray-900">{selectedLead.origin}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Interesse</p>
-                  <p className="font-medium text-gray-900">{selectedLead.interest}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Mensagens</p>
-                  <p className="font-medium text-gray-900">{selectedLead.messageCount}</p>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-gray-200">
-                <p className="text-xs text-gray-500 mb-1">Última Mensagem</p>
-                <p className="text-sm text-gray-900">{selectedLead.lastMessage}</p>
-                <p className="text-xs text-gray-500 mt-2">{selectedLead.time}</p>
-              </div>
-
-              <div className="flex gap-2 pt-4">
-                <button className="flex-1 px-4 py-2 bg-gradient-to-r from-[#635BFF] to-[#00AFE1] text-white rounded-lg font-medium hover:opacity-90 transition-opacity">
-                  💬 Ir para Chat
-                </button>
-                <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors">
-                  👤 Ver Perfil
-                </button>
-              </div>
+        {loading ? (
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-[#635BFF] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-500">Carregando leads...</p>
             </div>
           </div>
-        </div>
-      )}
+        ) : (
+          <KanbanBoard columns={columns} onLeadClick={setSelectedLead} />
+        )}
+      </div>
+
+      {/* Real-time indicator */}
+      <div className="fixed bottom-6 right-6 bg-white rounded-full shadow-lg px-4 py-2 border border-gray-200 flex items-center gap-2">
+        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <span className="text-sm font-medium text-gray-700">
+          {unreadMessages > 0 ? `${unreadMessages} mensagens não lidas` : 'Atualizado em tempo real'}
+        </span>
+      </div>
+
+      {/* Lead Details Modal */}
+      <LeadDetailsModal lead={selectedLead} onClose={() => setSelectedLead(null)} />
     </DashboardLayout>
   );
 }

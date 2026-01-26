@@ -22,6 +22,7 @@ const menuItems: MenuSection[] = [
     section: 'Principal',
     items: [
       { name: 'Dashboard', href: '/dashboard', icon: '📊' },
+      { name: 'Looker', href: '/looker', icon: '👁️' },
       { name: 'Chats', href: '/chats', icon: '💬', badge: '3' },
       { name: 'CRM / Leads', href: '/crm', icon: '👥' },
       { name: 'Calendário', href: '/calendar', icon: '📅' },
