@@ -83,7 +83,7 @@ export default function HowItWorks() {
         {/* Bottom CTA */}
         <div className="text-center mt-16">
           <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg shadow-primary/30">
-            Começar Agora - É Grátis
+            Começar Agora
           </button>
         </div>
       </div>

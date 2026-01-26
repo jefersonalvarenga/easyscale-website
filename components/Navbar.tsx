@@ -25,9 +25,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">E</span>
-            </div>
+            <img
+              src="/images/logo.png"
+              alt="EasyScale Logo"
+              className="h-10 w-auto"
+            />
             <span className="font-display text-2xl font-bold text-textPrimary">
               EasyScale
             </span>
