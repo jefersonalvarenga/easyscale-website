@@ -32,7 +32,7 @@ export default function Features() {
       ),
       title: "Qualificação Automática",
       description: "Identifica leads quentes, coleta informações importantes e prioriza pacientes com alta intenção.",
-      stat: "3x",
+      stat: "4x",
       statLabel: "Mais conversões"
     },
     {

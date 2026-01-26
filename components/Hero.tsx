@@ -18,41 +18,41 @@ export default function Hero() {
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
             </svg>
-            <span>IA-Powered Automation</span>
+            <span>💎 Especializada em Clínicas de Estética</span>
           </div>
 
           {/* Headline */}
           <h1 className="font-display text-5xl md:text-6xl font-bold leading-tight stagger-2 animate-slide-up mb-6">
-            A única IA especialista em estéticas {" "}
-            <span className="gradient-text"> que converte até 4x mais.</span>
+            Transforme a sua clínica {" "}
+            <span className="gradient-text"> em uma máquina de vendas 24/7.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-textSecondary leading-relaxed stagger-3 animate-slide-up mb-8">
-            IA que vende e agenda por você, 24 horas por dia
+            IA que atende, vende e agenda para a sua clínica, 24 horas por dia
             e libera até 40% do trabalho repetitivo da sua recepção.
           </p>
 
           {/* Stats Row */}
           <div className="flex flex-wrap gap-8 stagger-4 animate-slide-up mb-8">
             <div>
-              <div className="text-4xl font-bold text-success">+40%</div>
-              <div className="text-textSecondary">Agendamentos</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-success">24/7</div>
-              <div className="text-textSecondary">Atendimento</div>
-            </div>
-            <div>
               <div className="text-4xl font-bold text-success">4x</div>
-              <div className="text-textSecondary">Mais Conversões</div>
+              <div className="text-textSecondary">+Faturamento</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-success">80%</div>
+              <div className="text-textSecondary">Redução faltas</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-success">60%</div>
+              <div className="text-textSecondary">Taxa conversão</div>
             </div>
           </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 stagger-5 animate-slide-up mb-6">
             <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg shadow-primary/30">
-              Começar Grátis por 14 Dias
+              Começar agora
             </button>
             <button className="bg-white text-primary border-2 border-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary/5 transition-all">
               Ver Demo ao Vivo
@@ -65,7 +65,14 @@ export default function Hero() {
               <svg className="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
               </svg>
-              <span>Sem cartão de crédito</span>
+              <span>API Oficial WhatsApp</span>
+            </div>
+            <span>•</span>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
+              </svg>
+              <span>Segurança de dados nível bancário</span>
             </div>
             <span>•</span>
             <div className="flex items-center gap-2">
@@ -88,11 +95,15 @@ export default function Hero() {
             <div className="relative glass rounded-3xl shadow-2xl overflow-hidden border border-border">
               {/* WhatsApp Header */}
               <div className="bg-gradient-to-r from-primary to-primaryHover text-white p-4 flex items-center space-x-3">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <span className="text-2xl">🤖</span>
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-white/10 border-2 border-white/20">
+                  <img
+                    src="/images/sofia-avatar.png"
+                    alt="Sofia - Atendimento IA"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
-                  <div className="font-semibold">Sofia - Atendimento IA</div>
+                  <div className="font-semibold">Sofia - Atendimento</div>
                   <div className="text-xs text-white/80">online</div>
                 </div>
               </div>
@@ -110,7 +121,7 @@ export default function Hero() {
                 {/* Bot Response */}
                 <div className="flex justify-start">
                   <div className="bg-white border border-border rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] shadow-sm">
-                    <p className="text-sm">Olá Mariana! 👋 Será um prazer te atender! Gostaria de ver fotos dos resultados?</p>
+                    <p className="text-sm">Olá! Que bom que você se interessou pelo nosso protocolo de Fotona! É o segredo para resultados incríveis sem agulhas. Como posso te chamar?</p>
                     <p className="text-xs text-textSecondary mt-1">14:32</p>
                   </div>
                 </div>
@@ -118,27 +129,24 @@ export default function Hero() {
                 {/* User Message */}
                 <div className="flex justify-end">
                   <div className="bg-primary/10 text-textPrimary rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%]">
-                    <p className="text-sm">Quinta-feira de tarde?</p>
+                    <p className="text-sm">Oi, sou Mariana</p>
                     <p className="text-xs text-textSecondary mt-1">14:33</p>
                   </div>
                 </div>
 
-                {/* Bot Response with buttons */}
+                {/* Bot Response */}
                 <div className="flex justify-start">
                   <div className="bg-white border border-border rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] shadow-sm">
-                    <p className="text-sm mb-3">Perfeito! ✨ Tenho 3 horários quinta:</p>
-                    <div className="space-y-2">
-                      <button className="w-full bg-primary/5 hover:bg-primary/10 text-primary rounded-lg px-3 py-2 text-sm font-medium transition-colors text-left">
-                        14:00 - Dra. Ana Silva
-                      </button>
-                      <button className="w-full bg-primary/5 hover:bg-primary/10 text-primary rounded-lg px-3 py-2 text-sm font-medium transition-colors text-left">
-                        15:30 - Dr. Carlos Souza
-                      </button>
-                      <button className="w-full bg-primary/5 hover:bg-primary/10 text-primary rounded-lg px-3 py-2 text-sm font-medium transition-colors text-left">
-                        17:00 - Dra. Marina Costa
-                      </button>
-                    </div>
-                    <p className="text-xs text-textSecondary mt-2">14:33</p>
+                    <p className="text-sm">Seja bem-vinda, Mariana! O Fotona é muito versátil. Para que nossa especialista prepare o melhor orçamento para você, qual área mais te incomoda hoje?</p>
+                    <p className="text-xs text-textSecondary mt-1">14:33</p>
+                  </div>
+                </div>
+
+                {/* Bot Response */}
+                <div className="flex justify-start">
+                  <div className="bg-white border border-border rounded-2xl rounded-tl-sm px-4 py-3 max-w-[80%] shadow-sm">
+                    <p className="text-sm">Flacidez no rosto e pescoço, pálpebras caídas ou você busca o protocolo de contorno corporal?</p>
+                    <p className="text-xs text-textSecondary mt-1">14:33</p>
                   </div>
                 </div>
 

@@ -87,7 +87,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-white/70 text-sm">
-            © 2025 EasyScale. Todos os direitos reservados.
+            © 2026 EasyScale. Todos os direitos reservados.
           </div>
           <div className="flex space-x-6 text-sm text-white/70">
             <a href="#" className="hover:text-white transition-colors">Privacidade</a>

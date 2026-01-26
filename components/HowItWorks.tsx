@@ -4,7 +4,7 @@ export default function HowItWorks() {
   const steps = [
     {
       number: "01",
-      title: "Conecte em 5 minutos",
+      title: "Conecte em minutos",
       description: "Integramos com seu WhatsApp Business e sistema de agendamento. Zero configuração técnica necessária.",
       icon: "🔌",
       color: "from-primary to-accent"

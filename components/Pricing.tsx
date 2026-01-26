@@ -3,8 +3,8 @@
 export default function Pricing() {
   const plans = [
     {
-      name: "Starter",
-      price: "297",
+      name: "Growth",
+      price: "1297",
       description: "Perfeito para começar",
       popular: false,
       features: [
@@ -16,8 +16,8 @@ export default function Pricing() {
       ]
     },
     {
-      name: "Growth",
-      price: "697",
+      name: "Scale",
+      price: "2497",
       description: "Para clínicas em crescimento",
       popular: true,
       features: [
@@ -31,8 +31,8 @@ export default function Pricing() {
       ]
     },
     {
-      name: "Scale",
-      price: "1.297",
+      name: "Performance",
+      price: "4.997",
       description: "Para operações grandes",
       popular: false,
       features: [
