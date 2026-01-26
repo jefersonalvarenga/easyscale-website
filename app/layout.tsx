@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "EasyScale - Automação Inteligente para Clínicas de Estética",
   description: "Cresça sua clínica de estética sem complicação. Automação com IA que converte leads em agendamentos 24/7.",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
