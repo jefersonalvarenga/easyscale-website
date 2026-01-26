@@ -4,15 +4,17 @@ export default function Pricing() {
   const plans = [
     {
       name: "Growth",
-      price: "1297",
+      price: "1499",
       description: "Perfeito para começar",
       popular: false,
       features: [
-        "Até 500 conversas/mês",
-        "Agendamento automático",
-        "WhatsApp Business",
-        "Dashboard básico",
-        "Suporte por email",
+        "Organiza atendimento",
+        "Qualificação de leads",
+        "Alerta atrasos",
+        "Identifica tipo de paciente",
+        "Minera pacientes esquecidos",
+        "Analytics avançado",
+        "Multi-WhatsApp",
       ]
     },
     {
