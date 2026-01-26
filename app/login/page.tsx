@@ -14,18 +14,26 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
 
-    // TODO: Implementar autenticação real
-    // Por enquanto, simula login com cookie
-    setTimeout(async () => {
+    try {
       // Salvar token em cookie via API route
-      await fetch('/api/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
-      router.push('/dashboard');
-    }, 1000);
+      const data = await response.json();
+
+      if (data.success) {
+        router.push('/dashboard');
+      } else {
+        console.error('Erro no login:', data.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      setLoading(false);
+    }
   };
 
   return (
