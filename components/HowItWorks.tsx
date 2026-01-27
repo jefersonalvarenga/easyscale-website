@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 
 export default function HowItWorks() {
   const steps = [
@@ -82,9 +83,15 @@ export default function HowItWorks() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg shadow-primary/30">
+          <Link href="https://wa.me/5511982044215" target="_blank">
+            <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg shadow-primary/30">
+              Começar Agora
+            </button>
+          </Link>
+          <a href="https://wa.me/5511982044215" className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-backgroundSecondary transition-all shadow-xl inline-block">
             Começar Agora
-          </button>
+          </a>
+
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 "use client";
-
+import Link from 'next/link';
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -64,9 +64,11 @@ export default function Navbar() {
           </div>
 
           {/* CTA Button */}
-          <button className="btn-primary bg-primary text-white px-6 py-3 rounded-lg font-semibold">
-            Começar Agora
-          </button>
+          <Link href="https://wa.me/5511982044215" target="_blank">
+            <button className="btn-primary bg-primary text-white px-6 py-3 rounded-lg font-semibold">
+              Começar Agora
+            </button>
+          </Link>
         </div>
       </div>
     </nav>

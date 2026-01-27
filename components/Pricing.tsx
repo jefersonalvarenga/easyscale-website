@@ -1,11 +1,12 @@
 "use client";
+import Link from 'next/link';
 
 export default function Pricing() {
   const plans = [
     {
       name: "Sonar®",
       price: "1.499",
-      description: "Painel de controle que fornece super poderes para sua equipe",
+      description: "Painel de controle que empodera sua equipe de atendimento",
       popular: false,
       features: [
         "Equipe mantém atendimento",
@@ -22,7 +23,7 @@ export default function Pricing() {
     {
       name: "Copilot®",
       price: "2.999",
-      description: "A IA atua em conjunto com a sua equipe de atendimento",
+      description: "Sua equipe de atendimento + IA trabalhando lado a lado",
       popular: true,
       features: [
         "Tudo do Sonar®, mais:",
@@ -30,6 +31,7 @@ export default function Pricing() {
         "IA atende sob demanda",
         "Configurável por horário",
         "Configurável por segmento",
+        "Roteiro de atendimento autônomo",
         "Permite assumir atendimento",
         "Auto recuperação de leads frios",
         "Qualificação avançada de leads",
@@ -38,16 +40,15 @@ export default function Pricing() {
     {
       name: "Autopilot®",
       price: "4.999",
-      description: "Para operações grandes",
+      description: "Atendimento autônomo 24/7 com supervisão humana",
       popular: false,
       features: [
         "Tudo do Copilot®, mais:",
-        "IA atende 100% sozinha 24/7",
+        "IA autônoma atendendo 24/7",
         "Multi-unidades",
-        "API personalizada",
-        "Treinamento dedicado",
-        "Account manager",
-        "SLA garantido",
+        "Mede performance de anúncios",
+        "Atendimento hiperpersonalizado",
+        "Lead scoring",
       ]
     }
   ];
@@ -67,7 +68,7 @@ export default function Pricing() {
             Escolha o Nível de Automação
           </h2>
           <p className="text-xl text-textSecondary">
-            Comece grátis por 14 dias. Sem cartão de crédito. Cancele quando quiser.
+            Dê superpoderes à sua equipe. Do painel inteligente à automação total.
           </p>
         </div>
 
@@ -127,15 +128,17 @@ export default function Pricing() {
               </ul>
 
               {/* CTA Button */}
-              <button
-                className={`w-full py-4 rounded-lg font-semibold transition-all ${
-                  plan.popular
-                    ? "btn-primary bg-primary text-white shadow-lg shadow-primary/30"
-                    : "bg-backgroundSecondary text-textPrimary hover:bg-primary hover:text-white border-2 border-border hover:border-primary"
-                }`}
-              >
-                {plan.popular ? "Começar Agora" : "Escolher Plano"}
-              </button>
+              <Link href="https://wa.me/5511982044215" target="_blank">
+                <button
+                  className={`w-full py-4 rounded-lg font-semibold transition-all ${
+                    plan.popular
+                      ? "btn-primary bg-primary text-white shadow-lg shadow-primary/30"
+                      : "bg-backgroundSecondary text-textPrimary hover:bg-primary hover:text-white border-2 border-border hover:border-primary"
+                  }`}
+                >
+                  {plan.popular ? "Começar Agora" : "Escolher Plano"}
+                </button>
+              </Link>
             </div>
           ))}
         </div>
@@ -148,19 +151,19 @@ export default function Pricing() {
               <svg className="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
               </svg>
-              <span>14 dias grátis</span>
+              <span>Garantia 30 dias satisfação</span>
             </div>
             <div className="flex items-center space-x-2">
               <svg className="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
               </svg>
-              <span>Sem contrato</span>
+              <span>Cancele quando quiser</span>
             </div>
             <div className="flex items-center space-x-2">
               <svg className="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
               </svg>
-              <span>Suporte em português</span>
+              <span>Suporte via WhatsApp</span>
             </div>
             <div className="flex items-center space-x-2">
               <svg className="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
@@ -179,9 +182,11 @@ export default function Pricing() {
           <p className="text-xl text-textSecondary mb-8 max-w-2xl mx-auto">
             Para redes com múltiplas unidades ou necessidades específicas, criamos um plano sob medida.
           </p>
-          <button className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primaryHover transition-all shadow-lg">
-            Falar com Especialista
-          </button>
+          <Link href="https://wa.me/5511982044215">
+            <button className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primaryHover transition-all shadow-lg">
+              Falar com Especialista
+            </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 "use client";
-
+import Link from 'next/link';
 import { useState } from "react";
 
 export default function FAQ() {
@@ -7,24 +7,24 @@ export default function FAQ() {
 
   const faqs = [
     {
-      question: "Como funciona o período de teste gratuito?",
-      answer: "Você tem 14 dias completos para testar todas as funcionalidades do EasyScale sem precisar cadastrar cartão de crédito. Durante esse período, você terá acesso total ao plano Growth para avaliar o impacto na sua clínica. Após o trial, você escolhe o plano que faz sentido para você."
+      question: "Como funciona a garantia de 30 dias?",
+      answer: "Você tem 30 dias completos para avaliar o EasyScale na sua clínica. Se por qualquer motivo não ficar satisfeito, devolvemos 100% do valor investido. Sem perguntas, sem burocracia. Basta solicitar o reembolso dentro do período e processamos em até 5 dias úteis."
     },
     {
       question: "Preciso ter conhecimento técnico para usar?",
-      answer: "Absolutamente não! O EasyScale foi desenhado para ser plug-and-play. Nossa equipe faz toda a integração com seu WhatsApp Business e sistema de agendamento. Você só precisa responder algumas perguntas sobre seus serviços e horários, e em menos de 1 hora Sofia já está atendendo seus leads."
+      answer: "Absolutamente não! O EasyScale foi desenhado para ser plug-and-play. Nossa equipe faz toda a integração com seu WhatsApp Business e sistema de agendamento. Você só precisa responder algumas perguntas sobre seus serviços e horários, e em menos de 1 hora EasyScale já está atendendo seus leads."
     },
     {
       question: "Como funciona a integração com minha agenda?",
-      answer: "Integramos nativamente com os principais sistemas: Google Calendar, Calendly, Agendor, RD Station e outros. Sofia sincroniza automaticamente seus horários disponíveis, evita conflitos e atualiza sua agenda em tempo real quando um paciente agenda. Se você usa um sistema diferente, nossa API permite integração customizada."
+      answer: "Integramos nativamente com os principais sistemas: Google Calendar, Calendly, Agendor, RD Station e outros. EasyScale sincroniza automaticamente seus horários disponíveis, evita conflitos e atualiza sua agenda em tempo real quando um paciente agenda. Se você usa um sistema diferente, nossa API permite integração customizada."
     },
     {
-      question: "Sofia substitui completamente minha recepcionista?",
-      answer: "Não, e nem é esse o objetivo. Sofia cuida de tarefas repetitivas: qualificação inicial de leads, agendamentos simples, lembretes e follow-ups automáticos. Isso libera sua equipe para focar no que realmente importa: atendimento humano de qualidade nos momentos que fazem diferença. Você sempre pode intervir em qualquer conversa."
+      question: "EasyScale substitui completamente minha recepcionista?",
+      answer: "Não, e nem é esse o objetivo. EasyScale cuida de tarefas repetitivas: qualificação inicial de leads, agendamentos simples, lembretes e follow-ups automáticos. Isso libera sua equipe para focar no que realmente importa: atendimento humano de qualidade nos momentos que fazem diferença. Você sempre pode intervir em qualquer conversa."
     },
     {
-      question: "E se Sofia não souber responder algo?",
-      answer: "Sofia é treinada especificamente para clínicas de estética e sabe quando escalar para um humano. Se um lead fizer uma pergunta complexa ou médica que exija atenção humana, Sofia transfere elegantemente para sua equipe. Você também pode configurar palavras-chave que sempre disparam transferência manual."
+      question: "E se EasyScale não souber responder algo?",
+      answer: "EasyScale é treinada especificamente para clínicas de estética e sabe quando escalar para um humano. Se um lead fizer uma pergunta complexa demais ou médica que exija atenção humana, EasyScale transfere elegantemente para sua equipe. Você também pode configurar palavras-chave que sempre disparam transferência manual."
     },
     {
       question: "Posso cancelar a qualquer momento?",
@@ -109,9 +109,11 @@ export default function FAQ() {
         {/* Bottom CTA */}
         <div className="mt-16 text-center">
           <p className="text-textSecondary mb-6">Ainda tem dúvidas?</p>
-          <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold shadow-lg shadow-primary/30">
-            Falar com Nossa Equipe
-          </button>
+          <Link href="https://wa.me/5511982044215" target="_blank">
+            <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold shadow-lg shadow-primary/30">
+              Falar com Nossa Equipe
+            </button>
+          </Link>
         </div>
       </div>
     </section>

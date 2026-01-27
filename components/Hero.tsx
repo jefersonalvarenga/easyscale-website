@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -51,9 +52,11 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 stagger-5 animate-slide-up mb-6">
-            <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg shadow-primary/30">
-              Começar agora
-            </button>
+            <Link href="https://wa.me/5511982044215" target="_blank">
+              <button className="btn-primary bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg shadow-primary/30">
+                Começar agora
+              </button>
+            </Link>
             <button className="bg-white text-primary border-2 border-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary/5 transition-all">
               Ver Demo ao Vivo
             </button>

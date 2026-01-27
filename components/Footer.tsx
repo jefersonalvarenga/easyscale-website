@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -15,9 +16,11 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-2xl">E</span>
-              </div>
+              <img
+              src="/images/logo.png"
+              alt="EasyScale Logo"
+              className="h-10 w-auto"
+            />
               <span className="font-display text-3xl font-bold">EasyScale</span>
             </div>
             <p className="text-white/70 text-lg mb-6 max-w-md">
@@ -106,9 +109,11 @@ export default function Footer() {
           <p className="text-xl mb-8 text-white/90">
             Junte-se a centenas de clínicas que já crescem com EasyScale
           </p>
-          <button className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-backgroundSecondary transition-all shadow-xl">
-            Começar Grátis Agora
-          </button>
+          <Link href="https://wa.me/5511982044215" target="_blank">
+            <button className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-backgroundSecondary transition-all shadow-xl">
+              Começar Agora
+            </button>
+          </Link>
         </div>
       </div>
     </footer>
