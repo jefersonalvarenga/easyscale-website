@@ -3,43 +3,46 @@
 export default function Pricing() {
   const plans = [
     {
-      name: "Growth",
-      price: "1499",
-      description: "Perfeito para começar",
+      name: "Sonar®",
+      price: "1.499",
+      description: "Painel de controle que fornece super poderes para sua equipe",
       popular: false,
       features: [
-        "Organiza atendimento",
-        "Qualificação de leads",
-        "Alerta atrasos",
-        "Identifica tipo de paciente",
+        "Equipe mantém atendimento",
+        "Painel com conversas organizadas",
+        "Qualificação automática de leads",
+        "IA sugere mensagens perfeitas",
+        "Alerta follow-up pendente",
+        "Identifica perfil do paciente",
         "Minera pacientes esquecidos",
         "Analytics avançado",
         "Multi-WhatsApp",
       ]
     },
     {
-      name: "Performance",
-      price: "2497",
-      description: "Para clínicas em crescimento",
+      name: "Copilot®",
+      price: "2.999",
+      description: "A IA atua em conjunto com a sua equipe de atendimento",
       popular: true,
       features: [
-        "Até 2.000 conversas/mês",
-        "Tudo do Growth, mais:",
-        "Qualificação de leads",
-        "Follow-up automático",
-        "Analytics avançado",
-        "Integração com CRM",
-        "Suporte prioritário",
+        "Tudo do Sonar®, mais:",
+        "Equipe atua em conjunto com IA",
+        "IA atende sob demanda",
+        "Configurável por horário",
+        "Configurável por segmento",
+        "Permite assumir atendimento",
+        "Auto recuperação de leads frios",
+        "Qualificação avançada de leads",
       ]
     },
     {
-      name: "Scale",
-      price: "4.997",
+      name: "Autopilot®",
+      price: "4.999",
       description: "Para operações grandes",
       popular: false,
       features: [
-        "Conversas ilimitadas",
-        "Tudo do Performance, mais:",
+        "Tudo do Copilot®, mais:",
+        "IA atende 100% sozinha 24/7",
         "Multi-unidades",
         "API personalizada",
         "Treinamento dedicado",
@@ -61,7 +64,7 @@ export default function Pricing() {
             Preços Transparentes
           </div>
           <h2 className="font-display text-5xl md:text-6xl font-bold mb-6">
-            Escolha Seu Plano
+            Escolha o Nível de Automação
           </h2>
           <p className="text-xl text-textSecondary">
             Comece grátis por 14 dias. Sem cartão de crédito. Cancele quando quiser.
