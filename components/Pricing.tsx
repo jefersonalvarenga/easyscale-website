@@ -9,15 +9,15 @@ export default function Pricing() {
       description: "Painel de controle que empodera sua equipe de atendimento",
       popular: false,
       features: [
-        "Equipe mantém atendimento",
-        "Painel com conversas organizadas",
+        "Mantém equipe no atendimento",
+        "Painel com rastreio de conversas",
         "Qualificação automática de leads",
         "IA sugere mensagens perfeitas",
         "Alerta follow-up pendente",
         "Identifica perfil do paciente",
         "Minera pacientes esquecidos",
         "Analytics avançado",
-        "Multi-WhatsApp",
+        "Múltiplos WhatsApp",
       ]
     },
     {
@@ -27,12 +27,11 @@ export default function Pricing() {
       popular: true,
       features: [
         "Tudo do Sonar®, mais:",
-        "Equipe atua em conjunto com IA",
-        "IA atende sob demanda",
-        "Configurável por horário",
-        "Configurável por segmento",
-        "Roteiro de atendimento autônomo",
-        "Permite assumir atendimento",
+        "IA atua em conjunto com equipe",
+        "Horários configuráveis",
+        "Estágios configuraveis",
+        "Atendimento configurável",
+        "Permite equipe assumir",
         "Auto recuperação de leads frios",
         "Qualificação avançada de leads",
       ]
@@ -45,7 +44,7 @@ export default function Pricing() {
       features: [
         "Tudo do Copilot®, mais:",
         "IA autônoma atendendo 24/7",
-        "Multi-unidades",
+        "Múltiplas unidades",
         "Mede performance de anúncios",
         "Atendimento hiperpersonalizado",
         "Lead scoring",
